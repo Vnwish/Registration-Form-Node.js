@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+    <h1>Sign Up</h1>
+    <form action="/signup" method="POST" onsubmit="return validateForm()">
+      <input type="text" id="username" name="username" placeholder="Username" required>
+      <br>
+      <input type="email" id="email" name="email" placeholder="Email" required>
+      <br>
+      <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+      <br>
+      <input type="password" id="password" name="password" placeholder="Password" required>
+      <br>
+      <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+      <br>
+      <button type="submit">Sign Up</button>
+    </form>
+    <div id="errorContainer"></div>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/email-validator/2.0.4/email-validator.min.js"></script>
+    <script>
+        function validateForm() {
+          var username = document.getElementById('username').value;
+          var email = document.getElementById('email').value;
+          var phone = document.getElementById('phone').value;
+          var password = document.getElementById('password').value;
+          var confirmPassword = document.getElementById('confirmPassword').value;
+          var errorContainer = document.getElementById('errorContainer');
+          errorContainer.innerHTML = ""; // Clear previous error messages
+      
+          // Check username
+          if (username.length < 4) {
+            errorContainer.appendChild(createErrorMessage("Username must be at least 4 characters long."));
+          }
+      
+          // Check email
+          if (!validateEmail(email)) {
+            errorContainer.appendChild(createErrorMessage("Please enter a valid email address."));
+          } else if (!email.endsWith('@gmail.com')) {
+            errorContainer.appendChild(createErrorMessage("Please enter a valid Gmail address."));
+          }
+      
+          // Check phone number
+          if (!validatePhone(phone)) {
+            errorContainer.appendChild(createErrorMessage("Please enter a valid phone number."));
+          }
+      
+          // Check password
+          if (password.length < 8) {
+            errorContainer.appendChild(createErrorMessage("Password must be at least 8 characters long."));
+          }
+      
+          // Check password match
+          if (password !== confirmPassword) {
+            errorContainer.appendChild(createErrorMessage("Passwords do not match."));
+          }
+      
+          return errorContainer.children.length === 0;
+        }
+      
+        function validateEmail(email) {
+          // Basic email validation check
+          var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return re.test(email);
+        }
+      
+        function validatePhone(phone) {
+          // Basic phone number validation check
+          var re = /^\d{10}$/;
+          return re.test(phone);
+        }
+      
+        function createErrorMessage(message) {
+          var p = document.createElement('p');
+          p.textContent = message;
+          return p;
+        }
+      </script>
+      
+  </body>
+  
+</html>

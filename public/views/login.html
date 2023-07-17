@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+    <h1>Login</h1>
+    <form action="/login" method="POST" onsubmit="return validateForm()">
+      <input type="email" id="email" name="email" placeholder="Email" required>
+      <br>
+      <input type="password" id="password" name="password" placeholder="Password" required>
+      <br>
+      <div id="errorContainer"></div> <!-- Add an error container -->
+      <button type="submit">Login</button>
+      <button type="button" onclick="resetPassword()">Reset Password</button> <!-- Add Reset Password button -->
+      <button type="button" onclick="forgotPassword()">Forgot Password</button> <!-- Add Forgot Password button -->
+    </form>
+  
+    <script>
+      function validateForm() {
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var errorContainer = document.getElementById('errorContainer');
+        errorContainer.innerHTML = ""; // Clear previous error messages
+  
+        // Check email
+        if (!validateEmail(email)) {
+          var errorMessage = "Please enter a valid email address in the format: example@gmail.com";
+          errorContainer.appendChild(createErrorMessage(errorMessage));
+          event.preventDefault(); // Prevent form submission if there are errors
+          return false;
+        }
+  
+        // Check password
+        if (password.length < 8) {
+          var errorMessage = "Password must be at least 8 characters long.";
+          errorContainer.appendChild(createErrorMessage(errorMessage));
+          event.preventDefault(); // Prevent form submission if there are errors
+          return false;
+        }
+  
+        return true;
+      }
+  
+      function validateEmail(email) {
+        // Basic email validation check
+        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var gmailRe = /@gmail\.com$/i; // Check for "@gmail.com"
+        return re.test(email) && gmailRe.test(email);
+      }
+  
+      function createErrorMessage(message) {
+        var p = document.createElement('p');
+        p.textContent = message;
+        return p;
+      }
+  
+      function resetPassword() {
+        // Redirect to the reset password page
+        window.location.href = "/reset-password";
+      }
+  
+      function forgotPassword() {
+        // Redirect to the forgot password page
+        window.location.href = "/forgot-password";
+      }
+    </script>
+  </body>
+  
+
+  
+
+</html>
